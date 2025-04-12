@@ -1,0 +1,13 @@
+[Interface]
+PrivateKey = {{WG_SERVER_PRIVATE_KEY}}
+Address = {{WG_INTERFACE_IP}}
+ListenPort = {{WG_PORT}}
+
+PostUp   = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+
+# Add to define a single peer at runtime:
+# [Peer]
+# PublicKey = ...
+# AllowedIPs = ...
